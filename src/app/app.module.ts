@@ -1,3 +1,4 @@
+import { AdminAuthGaurd } from './admin-auth-gaurd.service';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -6,6 +7,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {AuthService} from './auth.service';
+import { AuthGaurdService } from './auth-gaurd.service';
 
 import { AppComponent } from './app.component';
 import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
@@ -18,6 +21,8 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { LoginComponent } from './login/login.component';
+import { UserService } from './user.service';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,8 @@ import { LoginComponent } from './login/login.component';
     MyOrdersComponent,
     AdminProductsComponent,
     AdminOrdersComponent,
-    LoginComponent
+    LoginComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,
@@ -43,15 +49,48 @@ import { LoginComponent } from './login/login.component';
       {path:'',component:HomeComponent},
       {path:'products',component:ProductsComponent},
       {path:'shopping-cart',component:ShoppingCartComponent},
-      {path:'my-orders',component:MyOrdersComponent},
-      {path:'checkout',component:CheckoutComponent},
-      {path:'order-successful',component:OrderSuccessfulComponent},
-      {path:'admin/admin-orders',component:AdminProductsComponent},
-      {path:'admin/admin-products',component:AdminOrdersComponent},
       {path:'login',component:LoginComponent},
+
+      {
+        path:'my-orders',
+        component:MyOrdersComponent,
+        canActivate:[AuthGaurdService]
+      },
+      {
+        path:'checkout',
+        component:CheckoutComponent,
+        canActivate:[AuthGaurdService]
+      },
+      {
+        path:'order-successful',
+        component:OrderSuccessfulComponent,
+        canActivate:[AuthGaurdService]
+      },
+      
+      {
+        path:'admin/admin-orders',
+        component:AdminProductsComponent,
+        canActivate:[AuthGaurdService,AdminAuthGaurd]
+      },
+      {
+        path:'admin/product/new',
+        component:ProductFormComponent,
+        canActivate:[AuthGaurdService,AdminAuthGaurd]
+      },
+      {
+        path:'admin/admin-products',
+        component:AdminOrdersComponent,
+        canActivate:[AuthGaurdService,
+          AdminAuthGaurd]
+        },
+      
     ])
   ],
-  providers: [],
+  providers: [AuthService,
+              AuthGaurdService,
+              UserService,
+              AdminAuthGaurd
+            ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
