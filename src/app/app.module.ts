@@ -1,3 +1,5 @@
+import { ProductService } from './product.service';
+import { CategoryService } from './category.service';
 import { AdminAuthGaurd } from './admin-auth-gaurd.service';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,6 +11,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from './auth.service';
 import { AuthGaurdService } from './auth-gaurd.service';
+import { FormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ng2-validation'
 
 import { AppComponent } from './app.component';
 import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
@@ -41,6 +45,8 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    CustomFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
@@ -78,6 +84,11 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
         canActivate:[AuthGaurdService,AdminAuthGaurd]
       },
       {
+        path:'admin/product/:id',
+        component:ProductFormComponent,
+        canActivate:[AuthGaurdService,AdminAuthGaurd]
+      },
+      {
         path:'admin/admin-products',
         component:AdminOrdersComponent,
         canActivate:[AuthGaurdService,
@@ -89,7 +100,9 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
   providers: [AuthService,
               AuthGaurdService,
               UserService,
-              AdminAuthGaurd
+              AdminAuthGaurd,
+              CategoryService,
+              ProductService
             ],
   bootstrap: [AppComponent]
 })
