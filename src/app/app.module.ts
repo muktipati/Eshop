@@ -13,6 +13,8 @@ import {AuthService} from './auth.service';
 import { AuthGaurdService } from './auth-gaurd.service';
 import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation'
+import {DataTableModule} from "angular-6-datatable";
+
 
 import { AppComponent } from './app.component';
 import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
@@ -47,10 +49,10 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
     BrowserModule,
     FormsModule,
     CustomFormsModule,
+    DataTableModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    NgbModule.forRoot(),
+    AngularFireAuthModule,  NgbModule.forRoot(),
     RouterModule.forRoot([
       {path:'',component:HomeComponent},
       {path:'products',component:ProductsComponent},

@@ -4,10 +4,6 @@ import { ProductService } from './../../product.service';
 import { CategoryService } from './../../category.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
-
-
-// import 'rxjs/add/operator/take'
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
@@ -16,7 +12,8 @@ import { Observable } from 'rxjs/Observable';
 export class ProductFormComponent implements OnInit {
   categories$;
   product = {};
-  //newProductID:any;
+  id;
+  img_url:string= 'product.imgUrl';
   constructor(
     private routerLink: ActivatedRoute,
     private route: Router,
@@ -25,29 +22,27 @@ export class ProductFormComponent implements OnInit {
   ) {
    
     this.categories$ = CategoryService.getCategories()
-    let id = this.routerLink.snapshot.paramMap.get('id');
-    if(id) {
-
-      this.ProductService.get(id).subscribe(p => this.product = p)
+    this.id = this.routerLink.snapshot.paramMap.get('id');
+    if(this.id) {
+      this.ProductService.get(this.id).pipe(take(1)).subscribe(p => this.product = p)
       console.log("edit_product",this.product)
     }
-  //   if (id)
-  //   {
-  //     debugger; 
-  //   this.ProductService.get(id).subscribe(data => {
-  //     this.product = data;
-  //   })
-  //    this.newProductID=this.ProductService.get(id);
-  //    console.log(this.newProductID);
-  // }
   }
 
   ngOnInit() {
   }
   save(product) {
+    if(this.id) this.ProductService.update(this.id,product);
+    else this.ProductService.create(product);
     
-    this.ProductService.create(product);
     this.route.navigate(['admin/admin-products'])
+  }
+  delete(){
+    if(!confirm("Are you sure you want to delete this product ")) return;
+
+    this.ProductService.delete(this.id);
+    this.route.navigate(['admin/admin-products'])
+
   }
 
 }

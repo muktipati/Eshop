@@ -5,7 +5,45 @@
         </p>
     </div>
     <div>
-        <table class="table">
+        <p>
+            <input #search (keyup)="filter(search.value)" 
+            type="text" class="form-control" placeholder="search...">
+        </p>
+        <!-- <data-table
+        [items]="items"
+        [itemCount]='itemCount'
+        (reload)='reloadItems($event)'
+        >
+        <data-table-column
+        [property]="'title'"
+        [header]="'Title'"
+        [sortable]="true"
+        [reziable]="true"
+        >
+        <data-table-column
+        [property]="'price'"
+        [header]="'price'"
+        [sortable]="true"
+        [reziable]="true"
+        >
+        <ng-template #dataTableCell let-item="product">
+            {{product.price | currency:"₹"}}
+        </ng-template>
+        </data-table-column>
+        <data-table-column
+        [property]="'$key'"
+       
+        >
+        <ng-template #dataTableCell let-item="product">
+                <a [routerLink]="['/admin/product',p.$key]" class="btn btn-primary">Edit</a>
+        </ng-template>
+        </data-table-column>
+            
+        </data-table> -->
+
+
+
+        <!-- <table class="table">
             <thead>
                 <tr>
                     <th>Title</th>
@@ -14,7 +52,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let p of product | async">
+                <tr *ngFor="let p of filterProduct">
                     <td>{{p.title}}</td>
                     <td>{{p.price}}</td>
                     <td>
@@ -22,7 +60,40 @@
                     </td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
+        <!-- datatable starts -->
+        <table class="table  table-bordered  table-hover"   [mfData]="filterProduct" #mf="mfDataTable" [mfRowsOnPage]="5">
+                <thead>
+                <tr>
+                    <th>
+                        <mfDefaultSorter by="title">Title</mfDefaultSorter>
+                    </th>
+                    <th>
+                        <mfDefaultSorter by="price">price</mfDefaultSorter>
+                    </th>
+                    <th></th>
+                   
+                    
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of mf.data">
+                    <td>{{item.title}}</td>
+                    <td>{{item.price}}</td>
+                    <td> <a [routerLink]="['/admin/product',item.$key]" class="btn btn-primary">Edit</a></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+         <!-- datatable ends -->
+
+
 
     </div>
 </div>

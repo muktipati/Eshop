@@ -38,26 +38,28 @@
               <label for="imgurl">Image Url</label>
               
             
-              <input type="text" #imgUrl='ngModel' [(ngModel)]="product.imgUrl" name="imgUrl" id="imgUrl" class="form-control" required > 
+              <input  #imgUrl='ngModel' [(ngModel)]="product.imgUrl" name="imgUrl" id="imgUrl" class="form-control" required url > 
             </div>
             
-            <!-- <div class="alert alert-danger" *ngIf='imgUrl.touched && imgUrl.invalid'>
+            <div class="alert alert-danger" *ngIf='imgUrl.touched && imgUrl.invalid'>
               <div *ngIf="imgUrl.errors.required">Image Url is required</div>
               <div *ngIf="imgUrl.errors.url">please enter a valid URL</div>
               
-            </div> -->
+            </div>
             <button class="btn btn-primary" [disabled]="!f.valid" type="submit">save</button>
+            <button class="btn btn-danger" type="button" (click)="delete()">Delete</button>
           
           </form>
     </div>
     
     <div class="col-md-6">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" [src] = "product.imgUrl" *ngIf="product.imgUrl" >
+            <img class="card-img-top" [src] = 'product.imgUrl' *ngIf="product.imgUrl" >
             <div class="card-body">
                  
               <h5 class="card-title">{{product.title}}</h5>
               <p class="card-text">{{product.price | currency:"₹"}}</p>
+              
             
             </div>
           </div>
