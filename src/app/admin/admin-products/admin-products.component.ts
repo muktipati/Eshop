@@ -11,27 +11,27 @@ import { Subscription } from 'rxjs';
   templateUrl: './admin-products.component.html',
   styleUrls: ['./admin-products.component.css']
 })
-export class AdminProductsComponent implements OnInit ,OnDestroy {
-  product :{title:string}[];
-  filterProduct:any[];
-  subscription:Subscription;
+export class AdminProductsComponent implements OnInit  {
+  // product :{title:string}[];
+  // filterProduct:any[];
+  // subscription:Subscription;
 
-  constructor(private productService:ProductService){
+  // constructor(private productService:ProductService){
 
-    this.subscription = this.productService.getAll().subscribe(product => this.filterProduct = this.product = product);
-    console.log("this.product",this.product)
-  }
+  //   this.subscription = this.productService.getAll().subscribe(product => this.filterProduct = this.product = product);
+  //   console.log("this.product",this.product)
+  // }
 
 
   ngOnInit() {
   }
-  ngOnDestroy(){
-    this.subscription.unsubscribe();
-  }
-  filter(search:string){
-      this.filterProduct = (search)?
-      this.product.filter(p => p.title.toLocaleLowerCase().includes(search.toLocaleLowerCase())):
-      this.product;
-  }
+  // ngOnDestroy(){
+  //   this.subscription.unsubscribe();
+  // }
+  // filter(search:string){
+  //     this.filterProduct = (search)?
+  //     this.product.filter(p => p.title.toLocaleLowerCase().includes(search.toLocaleLowerCase())):
+  //     this.product;
+  // }
 
 }

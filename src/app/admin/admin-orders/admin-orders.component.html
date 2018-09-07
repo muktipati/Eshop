@@ -1,3 +1,45 @@
-<p>
-  admin-orders works!
-</p>
+<div class="container">
+  <div>
+    <p>
+      <a routerLink="/admin/product/new" class="btn btn-primary">new product</a>
+    </p>
+  </div>
+  <div>
+    <p>
+      <input #search (keyup)="filter(search.value)" type="text" class="form-control" placeholder="search...">
+    </p>
+    <table class="table  table-bordered  table-hover" [mfData]="filterProduct" #mf="mfDataTable" [mfRowsOnPage]="5">
+      <thead>
+        <tr>
+          <th>
+            <mfDefaultSorter by="title">Title</mfDefaultSorter>
+          </th>
+          <th>
+            <mfDefaultSorter by="price">price</mfDefaultSorter>
+          </th>
+          <th></th>
+
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of mf.data">
+          <td>{{item.title}}</td>
+          <td>{{item.price}}</td>
+          <td> <a [routerLink]="['/admin/product',item.$key]" class="btn btn-primary">Edit</a></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4">
+            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+
+
+
+  </div>
+</div>
