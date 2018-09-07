@@ -14,8 +14,7 @@ export class ProductService {
     return  this.db.list('/product')
   }
   get(productId){
-    debugger;
-    console.log(productId);
-    return this.db.object('/product') + productId  
+    
+    return this.db.object('/product/' + productId );  
   }
 }

@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 
+
 // import 'rxjs/add/operator/take'
 @Component({
   selector: 'app-product-form',
@@ -14,8 +15,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ProductFormComponent implements OnInit {
   categories$;
-  product:any;
-  newProductID:any;
+  product = {};
+  //newProductID:any;
   constructor(
     private routerLink: ActivatedRoute,
     private route: Router,
@@ -25,7 +26,11 @@ export class ProductFormComponent implements OnInit {
    
     this.categories$ = CategoryService.getCategories()
     let id = this.routerLink.snapshot.paramMap.get('id');
-   
+    if(id) {
+
+      this.ProductService.get(id).subscribe(p => this.product = p)
+      console.log("edit_product",this.product)
+    }
   //   if (id)
   //   {
   //     debugger; 
@@ -40,9 +45,9 @@ export class ProductFormComponent implements OnInit {
   ngOnInit() {
   }
   save(product) {
-    console.log("product" ,product);
-    // this.ProductService.create(product);
-    // this.route.navigate(['admin/admin-products'])
+    
+    this.ProductService.create(product);
+    this.route.navigate(['admin/admin-products'])
   }
 
 }
